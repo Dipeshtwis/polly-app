@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import LoginForm from "components/Authentication/Form/LoginForm";
 import authApi from "apis/auth";
 import { setAuthHeaders } from "apis/axios";
+import { logger } from "common/logger";
 import { setToLocalStorage } from "helpers/storage";
 
 const Login = () => {
@@ -17,8 +18,8 @@ const Login = () => {
       setToLocalStorage({
         authToken: response.data.auth_token,
         email,
-        userId: response.data.userId,
-        userName: response.data.user_name,
+        userId: response.data.user_id,
+        userFirstName: response.data.user_first_name,
       });
       setAuthHeaders();
       setLoading(false);
