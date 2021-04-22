@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { either, isEmpty, isNil } from "ramda";
+import { ToastContainer } from "react-toastify";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import initializeLogger from "common/logger";
-import { setAuthHeaders } from "apis/axios";
+import { registerIntercepts, setAuthHeaders } from "apis/axios";
 import Dashboard from "components/Dashboard";
 import Signup from "components/Authentication/Signup";
 import Login from "components/Authentication/Login";
@@ -16,6 +17,7 @@ const App = () => {
 
   useEffect(() => {
     initializeLogger();
+    registerIntercepts();
     setAuthHeaders(setLoading);
   }, []);
 
@@ -29,6 +31,7 @@ const App = () => {
 
   return (
     <Router>
+      <ToastContainer />
       <Switch>
         <Route exact path="/" component={Dashboard} />
         <Route exact path="/signup" component={Signup} />
