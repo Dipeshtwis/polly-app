@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const list = () => axios.get("/polls");
-const create = payload => axios.post("/polls/", payload);
-const show = id => axios.get(`/polls/${id}`);
-const update = ({ id, payload }) => axios.put(`/polls/${id}`, payload);
-const destroy = id => axios.delete(`/polls/${id}`);
+const list = () => axios.get("/api/v1/polls");
+const create = payload => axios.post("/api/v1/polls/", payload);
+const show = id => axios.get(`/api/v1/polls/${id}`);
+const update = ({ id, payload }) => axios.put(`/api/v1/polls/${id}`, payload);
+const destroy = id => axios.delete(`/api/v1/polls/${id}`);
 
 const pollsApi = {
   list,
