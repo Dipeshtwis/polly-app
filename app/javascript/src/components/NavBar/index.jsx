@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { getFromLocalStorage, setToLocalStorage } from "helpers/storage";
 import NavItem from "./NavItem";
 
-const NavBar = () => {
+const NavBar = ({ isLoggedIn }) => {
   const userName = getFromLocalStorage("authUserFirstName");
   const userId = getFromLocalStorage("authUserId");
 

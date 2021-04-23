@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { either, isEmpty, isNil } from "ramda";
 import { ToastContainer } from "react-toastify";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
-import initializeLogger from "common/logger";
+import { initializeLogger } from "common/logger";
 import { getFromLocalStorage } from "helpers/storage";
 import { registerIntercepts, setAuthHeaders } from "apis/axios";
 import Dashboard from "components/Dashboard";
@@ -37,7 +37,7 @@ const App = () => {
   return (
     <Router>
       <ToastContainer />
-      <NavBar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+      <NavBar isLoggedIn={isLoggedIn} />
       <Switch>
         <Route exact path="/" component={Dashboard} />
         <Route exact path="/polls/create" component={CreatePoll} />
