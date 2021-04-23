@@ -7,6 +7,7 @@ import { registerIntercepts, setAuthHeaders } from "apis/axios";
 import Dashboard from "components/Dashboard";
 import CreatePoll from "components/Polls/CreatePoll";
 import ShowPoll from "components/Polls/ShowPoll";
+import EditPoll from "components/Polls/EditPoll";
 import Signup from "components/Authentication/Signup";
 import Login from "components/Authentication/Login";
 import PrivateRoute from "components/Common/PrivateRoute";
@@ -38,6 +39,7 @@ const App = () => {
         <Route exact path="/" component={Dashboard} />
         <Route exact path="/polls/create" component={CreatePoll} />
         <Route exact path="/polls/:id/show" component={ShowPoll} />
+        <Route exact path="/polls/:id/edit" component={EditPoll} />
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/login" component={Login} />
         <PrivateRoute
