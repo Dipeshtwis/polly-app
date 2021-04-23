@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { isNil, isEmpty, either } from "ramda";
-
 import Container from "components/Container";
 import ListPolls from "components/Polls/ListPolls";
 import PageLoader from "components/PageLoader";

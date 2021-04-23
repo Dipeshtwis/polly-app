@@ -1,10 +1,27 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { getFromLocalStorage } from "helpers/storage";
+import { getFromLocalStorage, setToLocalStorage } from "helpers/storage";
 import NavItem from "./NavItem";
 
 const NavBar = () => {
   const userName = getFromLocalStorage("authUserFirstName");
+  const userId = getFromLocalStorage("authUserId");
+
+  const handleLogout = async () => {
+    try {
+      await authApi.logout(userId);
+      setToLocalStorage({
+        authToken: null,
+        email: null,
+        userId: null,
+        userFirstName: null,
+      });
+      resetAuthTokens();
+      window.location.href = "/";
+    } catch (error) {
+      logger.error(error);
+    }
+  };
 
   return (
     <nav className="bg-white shadow">

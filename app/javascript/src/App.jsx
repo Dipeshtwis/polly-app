@@ -3,6 +3,7 @@ import { either, isEmpty, isNil } from "ramda";
 import { ToastContainer } from "react-toastify";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import initializeLogger from "common/logger";
+import { getFromLocalStorage } from "helpers/storage";
 import { registerIntercepts, setAuthHeaders } from "apis/axios";
 import Dashboard from "components/Dashboard";
 import CreatePoll from "components/Polls/CreatePoll";
@@ -12,6 +13,7 @@ import Signup from "components/Authentication/Signup";
 import Login from "components/Authentication/Login";
 import PrivateRoute from "components/Common/PrivateRoute";
 import PageLoader from "components/PageLoader";
+import NavBar from "./components/NavBar";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -35,6 +37,7 @@ const App = () => {
   return (
     <Router>
       <ToastContainer />
+      <NavBar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       <Switch>
         <Route exact path="/" component={Dashboard} />
         <Route exact path="/polls/create" component={CreatePoll} />
