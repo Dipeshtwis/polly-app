@@ -6,6 +6,7 @@ import initializeLogger from "common/logger";
 import { registerIntercepts, setAuthHeaders } from "apis/axios";
 import Dashboard from "components/Dashboard";
 import CreatePoll from "components/Polls/CreatePoll";
+import ShowPoll from "components/Polls/ShowPoll";
 import Signup from "components/Authentication/Signup";
 import Login from "components/Authentication/Login";
 import PrivateRoute from "components/Common/PrivateRoute";
@@ -36,6 +37,7 @@ const App = () => {
       <Switch>
         <Route exact path="/" component={Dashboard} />
         <Route exact path="/polls/create" component={CreatePoll} />
+        <Route exact path="/polls/:id/show" component={ShowPoll} />
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/login" component={Login} />
         <PrivateRoute

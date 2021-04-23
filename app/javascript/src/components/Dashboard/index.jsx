@@ -22,6 +22,14 @@ const Dashboard = () => {
     }
   };
 
+  const showPoll = id => {
+    history.push(`/polls/${id}/show`);
+  };
+
+  const updatePoll = id => {
+    history.push(`/polls/${id}/edit`);
+  };
+
   useEffect(() => {
     fetchPolls();
   }, []);
@@ -37,7 +45,7 @@ const Dashboard = () => {
   if (!either(isNil, isEmpty)(polls)) {
     return (
       <Container>
-        <ListPolls data={polls} />
+        <ListPolls data={polls} showPoll={showPoll} updatePoll={updatePoll} />
       </Container>
     );
   }
