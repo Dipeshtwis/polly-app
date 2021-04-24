@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { isNil, isEmpty, either } from "ramda";
 import Container from "components/Container";
+import Button from "components/Button";
 import ListPolls from "components/Polls/ListPolls";
 import PageLoader from "components/PageLoader";
 import pollsApi from "apis/polls";
 import { logger } from "common/logger";
 
-const Dashboard = ({ history }) => {
+const Dashboard = ({ isLoggedIn }) => {
   const [polls, setPolls] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -19,14 +20,6 @@ const Dashboard = ({ history }) => {
       logger.error(error);
       setLoading(false);
     }
-  };
-
-  const showPoll = id => {
-    history.push(`/polls/${id}/show`);
-  };
-
-  const updatePoll = id => {
-    history.push(`/polls/${id}/edit`);
   };
 
   const destroyPoll = async id => {
@@ -50,22 +43,28 @@ const Dashboard = ({ history }) => {
     );
   }
 
-  if (!either(isNil, isEmpty)(polls)) {
-    return (
-      <Container>
-        <ListPolls
-          data={polls}
-          showPoll={showPoll}
-          updatePoll={updatePoll}
-          destroyPoll={destroyPoll}
-        />
-      </Container>
-    );
-  }
-
   return (
     <Container>
-      <h1 className="text-xl leading-5 text-center">No Polls Available</h1>
+      <div className="flex justify-between items-center mt-8 py-4 border-b">
+        <h1 className="text-bb-purple text-4xl font-medium">Polls</h1>
+        {isLoggedIn ? (
+          <Button
+            type="link"
+            path={`/polls/new`}
+            buttonText="Create"
+            iconClass="ri-add-line"
+          />
+        ) : (
+          ""
+        )}
+      </div>
+      {either(isNil, isEmpty)(polls) ? (
+        <h1 className="text-3xl leading-5 text-center pt-6">
+          No Polls Available
+        </h1>
+      ) : (
+        <ListPolls data={polls} destroyPoll={destroyPoll} />
+      )}
     </Container>
   );
 };
