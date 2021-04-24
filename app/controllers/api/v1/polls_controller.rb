@@ -3,8 +3,11 @@ module Api
     class PollsController < ApplicationController
       before_action :authenticate_user_using_x_auth_token, except: :index
       before_action :load_poll, only: %i[show update destroy]
+      before_action :authorize_poll, only: [:update, :destroy]
+      before_action :load_options, only: :show
+
       def index
-        polls = Poll.all
+        polls = Poll.all.order('created_at DESC')
         render status: :ok, json: { polls: polls }
       end
 
@@ -19,11 +22,10 @@ module Api
       end
 
       def show
-        render status: :ok, json: { poll: @poll }
+        render status: :ok, json: { poll: @poll, options: @options }
       end
 
       def update
-        authorize @poll
         if @poll.update(poll_params)
           render status: :ok, json: { notice: 'Successfully updated poll.' }
         else
@@ -33,7 +35,6 @@ module Api
       end
 
       def destroy
-        authorize @poll
         if @poll.destroy
           render status: :ok, json: { notice: 'Successfully deleted poll.' }
         else
@@ -45,13 +46,25 @@ module Api
       private
       
       def poll_params
-        params.require(:poll).permit(:title)
+        params.require(:poll)
+          .permit(:title, options_attributes: [:id, :content])
+          .merge(user_id: @current_user.id)
       end
 
       def load_poll
         @poll = Poll.find(params[:id])
         rescue ActiveRecord::RecordNotFound => errors
           render json: {errors: errors}
+      end
+
+      def load_options
+        @options = Option.where(polls: @poll.id)
+        rescue ActiveRecord::RecordNotFound => errors
+          render json: {errors: errors}
+      end
+
+      def authorize_poll
+        authorize @poll
       end
     end
   end
