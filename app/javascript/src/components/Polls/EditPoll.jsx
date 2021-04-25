@@ -9,15 +9,23 @@ import { logger } from "common/logger";
 
 const EditPoll = ({ history }) => {
   const [title, setTitle] = useState("");
-  // const [userId, setUserId] = useState("");
   const [loading, setLoading] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
   const { id } = useParams();
+  const [options, setOptions] = useState([
+    { content: "" },
+    { content: "" },
+    { content: "" },
+    { content: "" },
+  ]);
 
   const handleSubmit = async event => {
     event.preventDefault();
     try {
-      await pollsApi.update({ id, payload: { poll: { title } } });
+      await pollsApi.update({
+        id,
+        payload: { poll: { title, options_attributes: options } },
+      });
       setLoading(false);
       history.push("/");
     } catch (error) {
@@ -30,7 +38,7 @@ const EditPoll = ({ history }) => {
     try {
       const response = await pollsApi.show(id);
       setTitle(response.data.poll.title);
-      // setUserId(response.data.poll.user_id);
+      setOptions(response.data.options);
     } catch (error) {
       logger.error(error);
     } finally {
@@ -56,6 +64,8 @@ const EditPoll = ({ history }) => {
         type="update"
         title={title}
         setTitle={setTitle}
+        options={options}
+        setOptions={setOptions}
         loading={loading}
         handleSubmit={handleSubmit}
       />

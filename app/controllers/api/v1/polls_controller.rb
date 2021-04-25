@@ -12,7 +12,7 @@ module Api
       end
 
       def create
-        @poll = Poll.new(poll_params.merge(user_id: @current_user.id))
+        @poll = Poll.new(poll_params)
         if @poll.save
           render status: :ok, json: { notice:  t('successfully_created', entity: 'Poll') }
         else
@@ -22,7 +22,9 @@ module Api
       end
 
       def show
-        render status: :ok, json: { poll: @poll, options: @options }
+        render status: :ok, json: {
+          poll: @poll, options: @options
+        }
       end
 
       def update
