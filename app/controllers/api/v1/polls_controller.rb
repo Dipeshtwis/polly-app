@@ -58,7 +58,7 @@ module Api
       end
 
       def load_options
-        @options = Option.where(polls: @poll.id)
+        @options = Option.where(poll: @poll.id)
         rescue ActiveRecord::RecordNotFound => errors
           render json: {errors: errors}
       end
