@@ -4,7 +4,7 @@ module Api
       before_action :authenticate_user_using_x_auth_token, except: :index
       before_action :load_poll, only: %i[show update destroy]
       before_action :authorize_poll, only: [:update, :destroy]
-      before_action :load_options, only: :show
+      before_action :load_options, :load_votes, only: :show
 
       def index
         polls = Poll.all.order('created_at DESC')
@@ -23,13 +23,13 @@ module Api
 
       def show
         render status: :ok, json: {
-          poll: @poll, options: @options
+          poll: @poll, options: @options, votes: @votes
         }
       end
 
       def update
         if @poll.update(poll_params)
-          render status: :ok, json: { notice: 'Successfully updated poll.' }
+          render status: :ok, json: { notice: t('successfully_updated', entity: 'Poll') }
         else
           errors = @poll.errors.full_messages
           render status: :unprocessable_entity, json: { errors: errors }
@@ -38,7 +38,7 @@ module Api
 
       def destroy
         if @poll.destroy
-          render status: :ok, json: { notice: 'Successfully deleted poll.' }
+          render status: :ok, json: { notice: t('successfully_deleted', entity: 'Poll') }
         else
           errors = @poll.errors.full_messages
           render status: :unprocessable_entity, json: { errors: errors }
@@ -55,14 +55,16 @@ module Api
 
       def load_poll
         @poll = Poll.find(params[:id])
-        rescue ActiveRecord::RecordNotFound => errors
-          render json: {errors: errors}
       end
 
       def load_options
         @options = Option.where(polls: @poll.id)
         rescue ActiveRecord::RecordNotFound => errors
           render json: {errors: errors}
+      end
+
+      def load_votes
+        @votes = Vote.where(poll_id: params[:id])
       end
 
       def authorize_poll

@@ -1,11 +1,18 @@
 module Api
   module V1
     class VotesController < ApplicationController
-      before_action :authenticate_user_using_x_auth_token, only: %i[create]
+      before_action :authenticate_user_using_x_auth_token, only: :create
       
       def create
         @vote = Vote.new(vote_params)
-        if @vote.save
+        voted = Vote.where(poll_id: vote_params[:poll_id],
+          user_id: @current_user.id
+        )
+        if(voted)
+          render status: :unprocessable_entity, json: {
+          errors: t('vote.duplicate_error_message')
+          }
+        elsif @vote.save
           render status: :ok, json: { notice: t('vote.success_message') }
         else
           errors = @vote.errors.full_messages
