@@ -8,7 +8,7 @@ module Api
         voted = Vote.where(poll_id: vote_params[:poll_id],
           user_id: @current_user.id
         )
-        if(voted)
+        if(voted.length > 0)
           render status: :unprocessable_entity, json: {
           errors: t('vote.duplicate_error_message')
           }

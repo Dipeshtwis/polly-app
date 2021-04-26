@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, only: %i[create]
       resources :polls, except: %i[new edit]
-      resource :sessions, only: [:create, :destroy]
+      resources :sessions, only: [:create, :destroy]
       resources :votes, only: :create
     end
   end
