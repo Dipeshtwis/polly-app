@@ -1,33 +1,26 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Button from "components/Button";
-import { Link } from "react-router-dom";
 import { getFromLocalStorage } from "helpers/storage";
 
-const ListPolls = ({ data, destroyPoll }) => {
+const ListPolls = ({ data, destroyPoll, showPoll, updatePoll }) => {
   const userId = getFromLocalStorage("authUserId");
-
   return (
-    <ul className="mb-8">
+    <div className="mb-8 border-solid border-gray-50 border-2 rounded-md">
       {data.map(poll => (
-        <li
+        <div
           key={poll.id}
-          className="flex justify-between items-center py-4 border-b"
+          className="flex justify-between items-center border-b gap-x-2"
         >
-          <Link
-            to={`/polls/${poll.id}/show`}
-            className="hover:text-purple-700 text-lg"
+          <div
+            onClick={() => showPoll(poll.id)}
+            className="flex items-center cursor-pointer py-4 hover:text-purple-700 text-lg ml-4"
           >
-            <i className="ri-arrow-right-circle-fill text-bb-purple align-middle pr-2 text-xl"></i>
             {poll.title}
-          </Link>
-          {userId === poll.user_id ? (
-            <div className="flex justify-between items-center gap-x-2">
-              <Button
-                type="link"
-                path={`/polls/${poll.id}/edit`}
-                buttonText="Edit"
-              />
+          </div>
+          {userId == poll.user_id ? (
+            <div className="flex justify-between items-center gap-x-2 mr-4">
+              <Button onClick={() => updatePoll(poll.id)} buttonText="Edit" />
               <Button
                 onClick={() => destroyPoll(poll.id)}
                 buttonText="Delete"
@@ -36,9 +29,9 @@ const ListPolls = ({ data, destroyPoll }) => {
           ) : (
             ""
           )}
-        </li>
+        </div>
       ))}
-    </ul>
+    </div>
   );
 };
 

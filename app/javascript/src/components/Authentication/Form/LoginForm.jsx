@@ -40,7 +40,9 @@ const LoginForm = ({ handleSubmit, setEmail, setPassword, loading }) => {
             placeholder="********"
             onChange={e => setPassword(e.target.value)}
           />
-          <Button type="submit" buttonText="Sign In" loading={loading} />
+          <div className="flex justify-center mt-6">
+            <Button type="submit" buttonText="Sign In" loading={loading} />
+          </div>
         </form>
       </div>
     </div>

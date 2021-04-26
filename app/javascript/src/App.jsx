@@ -39,20 +39,27 @@ const App = () => {
       <ToastContainer />
       <NavBar isLoggedIn={isLoggedIn} />
       <Switch>
-        <Route exact path="/polls/new" component={CreatePoll} />
-        <Route exact path="/polls/:id/show" component={ShowPoll} />
-        <Route exact path="/polls/:id/edit" component={EditPoll} />
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/login" component={Login} />
-        <Route path="/">
-          <Dashboard isLoggedIn={isLoggedIn} />
-        </Route>
-        {/* <PrivateRoute
-          path="/"
+        <Route exact path="/" component={Dashboard} />
+        <PrivateRoute
+          path="/polls/:id/show"
           redirectRoute="/login"
           condition={isLoggedIn}
-          component={Dashboard}
-        /> */}
+          component={ShowPoll}
+        />
+        <PrivateRoute
+          path="/polls/new"
+          redirectRoute="/login"
+          condition={isLoggedIn}
+          component={CreatePoll}
+        />
+        <PrivateRoute
+          path="/polls/:id/edit"
+          redirectRoute="/login"
+          condition={isLoggedIn}
+          component={EditPoll}
+        />
       </Switch>
     </Router>
   );

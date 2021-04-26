@@ -52,7 +52,7 @@ const PollForm = ({
           onChange={e => handleSetOptions(e, 3)}
         />
       </div>
-      <div className="mt-6">
+      <div className="flex justify-center mt-6">
         <Button
           type="submit"
           buttonText={type === "create" ? "Create poll" : "Update poll"}

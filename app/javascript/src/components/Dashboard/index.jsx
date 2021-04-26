@@ -7,7 +7,7 @@ import PageLoader from "components/PageLoader";
 import pollsApi from "apis/polls";
 import { logger } from "common/logger";
 
-const Dashboard = ({ isLoggedIn }) => {
+const Dashboard = ({ history, isLoggedIn }) => {
   const [polls, setPolls] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -31,6 +31,18 @@ const Dashboard = ({ isLoggedIn }) => {
     }
   };
 
+  const showPoll = id => {
+    history.push(`/polls/${id}/show`);
+  };
+
+  const updatePoll = id => {
+    history.push(`/polls/${id}/edit`);
+  };
+
+  const createPoll = () => {
+    history.push("/polls/new");
+  };
+
   useEffect(() => {
     fetchPolls();
   }, []);
@@ -45,25 +57,21 @@ const Dashboard = ({ isLoggedIn }) => {
 
   return (
     <Container>
-      <div className="flex justify-between items-center mt-8 py-4 border-b">
+      <div className="flex justify-between items-center mt-8 py-4">
         <h1 className="text-bb-purple text-4xl font-medium">Polls</h1>
-        {isLoggedIn ? (
-          <Button
-            type="link"
-            path={`/polls/new`}
-            buttonText="Create"
-            iconClass="ri-add-line"
-          />
-        ) : (
-          ""
-        )}
+        <Button type="button" onClick={createPoll} buttonText="Create +" />
       </div>
       {either(isNil, isEmpty)(polls) ? (
         <h1 className="text-3xl leading-5 text-center pt-6">
           No Polls Available
         </h1>
       ) : (
-        <ListPolls data={polls} destroyPoll={destroyPoll} />
+        <ListPolls
+          data={polls}
+          destroyPoll={destroyPoll}
+          showPoll={showPoll}
+          updatePoll={updatePoll}
+        />
       )}
     </Container>
   );
