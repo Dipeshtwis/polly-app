@@ -53,7 +53,7 @@ A full web app that allow user to sign in and vote in any poll and also see the 
 
 ## Live Demo Link <a name = "ll"></a>
 
-[Live Demo]()
+[Live Demo](https://deep-polly-app.herokuapp.com/)
 
 
 ## Getting Started <a name = "gs"></a>
