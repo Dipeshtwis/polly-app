@@ -9,7 +9,7 @@ import Dashboard from "components/Dashboard";
 import CreatePoll from "components/Polls/CreatePoll";
 import ShowPoll from "components/Polls/ShowPoll";
 import EditPoll from "components/Polls/EditPoll";
-import Signup from "components/Authentication/Signup";
+import Signup from "components/Authentication/SignUp";
 import Login from "components/Authentication/Login";
 import PrivateRoute from "components/Common/PrivateRoute";
 import PageLoader from "components/PageLoader";
