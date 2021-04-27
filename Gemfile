@@ -51,4 +51,6 @@ end
 gem 'react-rails'
 gem "pundit"
 gem 'bcrypt', '~> 3.1', '>= 3.1.12'
+gem 'bundler-audit', require: false
+gem 'ruby_audit', require: false
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
