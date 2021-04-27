@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import SignupForm from "components/Authentication/Form/SignupForm";
+import SignupForm from "components/Authentication/Form/SignUpForm";
 import authApi from "apis/auth";
 import { logger } from "common/logger";
 import { setAuthHeaders } from "apis/axios";
